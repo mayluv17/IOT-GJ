@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Progress } from "react-circle-progress-bar";
 import Image from "next/image"
-import { format, subDays, formatRelative, parseISO } from 'date-fns';
+import { format, formatRelative } from 'date-fns';
 
 import { eu } from 'date-fns/locale';
 
