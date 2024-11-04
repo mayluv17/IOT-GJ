@@ -14,10 +14,11 @@
     "mongoose": "^8.7.1",
     "next": "14.2.15",
     "react": "^18",
-    "react-circular-progressbar": "^2.1.0",
+    "react-circle-progress-bar": "^0.1.4",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "date-fns": "^4.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

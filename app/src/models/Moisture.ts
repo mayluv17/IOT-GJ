@@ -6,8 +6,16 @@ export interface IMoisture extends Document {
 }
 
 const MoistureSchema: Schema = new mongoose.Schema({
-  moisture: {
+  moistureBefore: {
     type: Number,
+    required: true,
+  },
+  moistureAfter: {
+    type: Number,
+    required: true,
+  },
+  isIrrigated: {
+    type: Boolean,
     required: true,
   },
   timestamp: {
