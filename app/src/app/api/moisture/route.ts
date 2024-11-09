@@ -28,21 +28,20 @@ export async function GET(req: NextRequest) {
               isIrrigated: Number(isIrrigated),
               timestamp: new Date(),
             });
-            
+                        
+          if (!moistureBefore && !moistureAfter && !isIrrigated){
+            const moistureData = await MoistureModel.find({});
+            return NextResponse.json(
+              { success: true, data: moistureData },
+              { status: 200 }
+            );
+          }
             return NextResponse.json(
               { success: true, data: moistureData },
               { status: 201 }
             );
 
-            
-if (!moistureBefore && !moistureAfter && !isIrrigated){
-  const moistureData = await MoistureModel.find({});
-  return NextResponse.json(
-    { success: true, data: moistureData },
-    { status: 200 }
-  );
 
-    }
 
 }
 
