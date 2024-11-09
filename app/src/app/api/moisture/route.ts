@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
     // Check if moisture query parameter is provided for saving
 
-    if (req.method === 'POST' ) {
+    if (req.method === 'GET' ) {
           const { searchParams } = new URL(req.url);
           const moistureBefore = searchParams.get('moistureBefore');
           const moistureAfter = searchParams.get('moistureAfter');
@@ -34,14 +34,16 @@ export async function GET(req: NextRequest) {
               { status: 201 }
             );
 
-    }
-
-if (req.method === 'GET'){
+            
+if (!moistureBefore && !moistureAfter && !isIrrigated){
   const moistureData = await MoistureModel.find({});
   return NextResponse.json(
     { success: true, data: moistureData },
     { status: 200 }
   );
+
+    }
+
 }
 
   }
