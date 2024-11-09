@@ -11,7 +11,7 @@ import { eu } from 'date-fns/locale';
 import { ResponsiveLine } from '@nivo/line'
 
 const fetchMoistureData = async () => {
-  const response = await axios.get("/api/moisture");
+  const response = await axios.get("/api/getmoisture");
   return response.data.data; // Assuming the data is in the 'data' field
 };
 
