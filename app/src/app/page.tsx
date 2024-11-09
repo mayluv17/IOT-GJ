@@ -57,7 +57,7 @@ export default function Home() {
   const graphData = !isLoading && !error && [{
     "id": "mostureGraph",
     "color": "hsl(184, 70%, 50%)",
-    "data": data.map(({ timestamp, moistureAfter, moistureBefore }) => ({
+    "data": data.map(({ timestamp, moistureAfter }) => ({
     "x": timestamp,           // Rename timestamp to x
     "y": moistureAfter       // Rename moistureAfter to y
   }))}]
