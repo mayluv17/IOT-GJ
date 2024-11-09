@@ -69,8 +69,8 @@ export default function Home() {
       <hr />
     <div className="m-8 max-w-[690px] mx-auto flex flex-wrap gap-8 font-[family-name:var(--font-geist-sans)] ">
       
-      {isLoading && <p className="m-auto">Loading...{}</p>}
-      {error && <p className="m-auto text-red-600 text-center">There was an error, it's not you it's us.<br /><i>please refresh</i></p>}
+      {isLoading && <p className="m-auto">Loading...</p>}
+      {error && <p className="m-auto text-red-600 text-center">There was an error<i>please refresh</i></p>}
       {!isLoading && !error && data && (
       <div className="border-2 border-slate-300 p-2 rounded-lg text-center">
         <h4 className="bg-blue-500 font-light text-white p-1 px-3 rounded-2xl w-fit text-sm mx-auto">Moisture Before</h4>
