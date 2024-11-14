@@ -27,25 +27,8 @@ const isMoreThan3DaysAgo = (timestamp: string): boolean => {
 };
 
 
-const formatTimestamp = (timestamp: string): string => {
-  // Parse the given timestamp as a Date object
-  const givenDate = new Date(timestamp);
-  
-
-  // Get the current date in UTC
-  const now = new Date();
-
-  // Use formatRelative with a specific locale
-  const relativeDate = formatRelative(givenDate, now, { locale: eu });
-
-  // Format the time part separately in UTC
-  const formattedTime = format(givenDate, 'h:mm a', { locale: eu });
-
-  // Combine the relative date with the formatted time
-  return `${relativeDate} at ${formattedTime}`;
-};
-
 export default function Home() {
+
   const getMoistureQuery = {
     queryKey: ["moisture"],
     queryFn: () => fetchMoistureData(),
@@ -58,21 +41,24 @@ export default function Home() {
     "id": "mostureGraph",
     "color": "hsl(184, 70%, 50%)",
     "data": data.map(({ timestamp, moistureAfter }) => ({
-    "x": timestamp,           // Rename timestamp to x
-    "y": moistureAfter       // Rename moistureAfter to y
+    // "x": format(timestamp, "dd/MM/yyyy,H:mm"),          
+    "x": timestamp,          
+    "y": moistureAfter       
   }))}]
 
+
+  console.log
 
   return (
     <>
     <p className="p-4 pl-8 bold font-bold text-xl text-blue-600">Plantly<small className="text-slate-600 text-xs ml-1 font-thin">Dashboard</small></p>
       <hr />
-    <div className="m-8 max-w-[690px] mx-auto flex flex-wrap gap-8 font-[family-name:var(--font-geist-sans)] ">
+    <div className="m-8 max-w-[690px] mx-auto p-2 flex flex-wrap gap-8 font-[family-name:var(--font-geist-sans)] ">
       
       {isLoading && <p className="m-auto">Loading...</p>}
       {error && <p className="m-auto text-red-600 text-center">There was an error<i>please refresh</i></p>}
       {!isLoading && !error && data && (
-      <div className="border-2 border-slate-300 p-2 rounded-lg text-center">
+      <div className="border-2 mx-auto border-slate-300 p-2 rounded-lg text-center">
         <h4 className="bg-blue-500 font-light text-white p-1 px-3 rounded-2xl w-fit text-sm mx-auto">Moisture Before</h4>
           <Progress
           reduction={0}
@@ -90,7 +76,7 @@ export default function Home() {
 
 
       {!isLoading && !error && data && (
-      <div className="border-2 border-slate-300 p-2 rounded-lg text-center">
+      <div className="border-2 mx-auto border-slate-300 p-2 rounded-lg text-center">
         <h4 className="bg-blue-500 font-light text-white p-1 px-3 rounded-2xl w-fit text-sm mx-auto">Moisture After</h4>
         
           <Progress
@@ -110,13 +96,12 @@ export default function Home() {
         {!isLoading && !error && data && (
       <div className="border-2 border-slate-300 p-2 rounded-lg text-center">
         <h4 className="flex bg-blue-500 font-light text-white p-1 px-3 rounded-2xl w-fit text-sm mr-auto ml-auto">Plant Mood</h4>
-        
-        
         <Image alt="happyplant" src={isMoreThan3DaysAgo(data.at(-1).timestamp) ? "/sad.png" : "/happy.png"} width={120} height={160}/>
       </div>
         )}
 
-      {!isLoading && !error && data && (<div className="h-64 w-96">
+      {!isLoading && !error && data && (
+        <div className="w-[450px] h-96">
         <ResponsiveLine
         data={graphData}
         margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
@@ -135,7 +120,7 @@ export default function Home() {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'moisture after against time',
+            legend: 'Time',
             legendOffset: 36,
             legendPosition: 'middle',
             truncateTickAt: 0
@@ -144,7 +129,7 @@ export default function Home() {
             tickSize: 5,
             tickPadding: 5,
             tickRotation: 0,
-            legend: 'count',
+            legend: 'Moisture content',
             legendOffset: -40,
             legendPosition: 'middle',
             truncateTickAt: 0
@@ -188,9 +173,9 @@ export default function Home() {
   
   )}
       {!isLoading && !error && data && (
-      <div className="grid h-fit">
+      <div className="grid mx-auto h-fit">
       <h4 className="flex bg-blue-500 font-light text-white p-1 px-3 rounded-2xl w-fit text-sm h-fit">Last Irrigation</h4>
-      <p className="font-light text-5xl text-slate-600 mt-2">{data && formatTimestamp(data?.at(-1).timestamp)}</p>
+      <p className="font-light text-5xl text-slate-600 mt-2">{data && formatRelative(data?.at(-1).timestamp , new Date()) }</p>
 
     </div>)}
     </div>
