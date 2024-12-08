@@ -108,7 +108,8 @@ export default function Home() {
             <Image
               alt="happyplant"
               src={
-                isMoreThan3DaysAgo(data.at(-1).timestamp)
+                isMoreThan3DaysAgo(data.at(-1).timestamp) ||
+                data.at(-1).moistureAfter < 20
                   ? '/sad.png'
                   : '/happy.png'
               }

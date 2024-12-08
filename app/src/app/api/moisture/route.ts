@@ -7,31 +7,33 @@ export async function GET(req: NextRequest) {
     // Ensure db connection
     await dbConnect();
 
-    // Extract query parameters directly from the request object (nextUrl is more Next.js-friendly)
-    const { searchParams } = req.nextUrl;
-    const moistureBefore = searchParams.get('moistureBefore');
-    const moistureAfter = searchParams.get('moistureAfter');
-    const isIrrigated = searchParams.get('isIrrigated');
+    // Check if moisture query parameter is provided for saving
 
-    if (!moistureBefore || !moistureAfter || !isIrrigated) {
+    if (req.method === 'GET') {
+      const { searchParams } = new URL(req.url);
+      const moistureBefore = searchParams.get('moistureBefore');
+      const moistureAfter = searchParams.get('moistureAfter');
+      const isIrrigated = searchParams.get('isIrrigated');
+
+      if (!moistureBefore || !moistureAfter || !isIrrigated) {
+        return NextResponse.json(
+          { success: false, message: 'Moisture content is required' },
+          { status: 400 }
+        );
+      }
+
+      const moistureData = await MoistureModel.create({
+        moistureBefore: Number(moistureBefore),
+        moistureAfter: Number(moistureAfter),
+        isIrrigated: Number(isIrrigated),
+        timestamp: new Date(),
+      });
+
       return NextResponse.json(
-        { success: false, message: 'Moisture content is required' },
-        { status: 400 }
+        { success: true, data: moistureData },
+        { status: 201 }
       );
     }
-
-    // Create a new moisture record
-    const moistureData = await MoistureModel.create({
-      moistureBefore: Number(moistureBefore),
-      moistureAfter: Number(moistureAfter),
-      isIrrigated: Number(isIrrigated),
-      timestamp: new Date(),
-    });
-
-    return NextResponse.json(
-      { success: true, data: moistureData },
-      { status: 201 }
-    );
   } catch (error) {
     console.error('Error handling moisture data:', error);
     return NextResponse.json(
