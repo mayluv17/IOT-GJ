@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect'; // Ensure the path to your dbConnect is correct
 import MoistureModel from '@/models/Moisture'; // Ensure the path to your Moisture model is correct
+import { revalidatePath } from 'next/cache';
 
 export async function GET() {
+  revalidatePath('/');
+
   try {
     // Ensure db connection
     await dbConnect();

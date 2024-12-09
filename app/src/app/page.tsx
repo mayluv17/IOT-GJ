@@ -10,7 +10,7 @@ import { formatRelative } from 'date-fns';
 import { ResponsiveLine } from '@nivo/line';
 
 const fetchMoistureData = async () => {
-  const timestamp = Date.parse(new Date().toString());
+  const timestamp = Date.now();
 
   const response = await axios.get(`/api/getmoisture?t=${timestamp}`, {
     headers: {
@@ -36,9 +36,6 @@ export default function Home() {
   const getMoistureQuery = {
     queryKey: ['moisture'],
     queryFn: () => fetchMoistureData(),
-    refetchOnMount: true, // Always refetch when the component mounts
-    refetchOnWindowFocus: true, // Refetch when the window regains focus
-    refetchInterval: 30000, // Optionally, you can set an interval for periodic refetching (every 30 seconds)
     cacheTime: 0, // Don't cache the data, always refetch it
     staleTime: 0,
   };
