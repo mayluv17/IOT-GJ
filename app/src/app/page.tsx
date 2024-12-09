@@ -12,7 +12,13 @@ import { ResponsiveLine } from '@nivo/line';
 const fetchMoistureData = async () => {
   const timestamp = Date.parse(new Date().toString());
 
-  const response = await axios.get(`/api/getmoisture?t=${timestamp}`);
+  const response = await axios.get(`/api/getmoisture?t=${timestamp}`, {
+    headers: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      Pragma: 'no-cache',
+      Expires: '0',
+    },
+  });
   return response.data.data; // Assuming the data is in the 'data' field
 };
 
