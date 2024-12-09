@@ -1,8 +1,8 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect'; // Ensure the path to your dbConnect is correct
 import MoistureModel from '@/models/Moisture'; // Ensure the path to your Moisture model is correct
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Ensure db connection
     await dbConnect();
