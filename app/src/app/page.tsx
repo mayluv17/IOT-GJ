@@ -11,7 +11,7 @@ import { ResponsiveLine } from '@nivo/line';
 
 const fetchMoistureData = async () => {
   const response = await axios.get(
-    '/api/getmoisture?t=Date.parse(new Date().toString())'
+    `/api/getmoisture?t=Date.parse(new Date().toString())`
   );
   return response.data.data; // Assuming the data is in the 'data' field
 };
