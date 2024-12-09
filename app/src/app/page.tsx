@@ -10,9 +10,9 @@ import { formatRelative } from 'date-fns';
 import { ResponsiveLine } from '@nivo/line';
 
 const fetchMoistureData = async () => {
-  const response = await axios.get(
-    `/api/getmoisture?t=Date.parse(new Date().toString())`
-  );
+  const timestamp = Date.parse(new Date().toString());
+
+  const response = await axios.get(`/api/getmoisture?t=${timestamp}`);
   return response.data.data; // Assuming the data is in the 'data' field
 };
 
